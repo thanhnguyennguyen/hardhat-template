@@ -64,7 +64,7 @@
     "deploy:contracts": "hardhat deploy",
     "lint": "pnpm lint:sol && pnpm lint:ts && pnpm prettier:check",
     "lint:sol": "solhint --max-warnings 0 \"contracts/**/*.sol\"",
-    "lint:ts": "eslint --ignore-path ./.eslintignore --ext .js,.ts .",
+    "lint:ts": "eslint --ignore-path ./.eslintignore --fix --ext .js,.ts .",
     "postinstall": "DOTENV_CONFIG_PATH=./.env.example pnpm typechain",
     "prettier:check": "prettier --check \"**/*.{js,json,md,sol,ts,yml}\"",
     "prettier:write": "prettier --write \"**/*.{js,json,md,sol,ts,yml}\"",

@@ -34,6 +34,10 @@ const chainIds = {
   "polygon-mainnet": 137,
   "polygon-mumbai": 80001,
   sepolia: 11155111,
+  viction: 88,
+  victiontestnet: 89,
+  neonevm: 245022934,
+  neondev: 245022926,
 };
 
 function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
@@ -44,6 +48,18 @@ function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
       break;
     case "bsc":
       jsonRpcUrl = "https://bsc-dataseed1.binance.org";
+      break;
+    case "viction":
+      jsonRpcUrl = "https://rpc.viction.xyz";
+      break;
+    case "victiontestnet":
+      jsonRpcUrl = "https://rpc-testnet.viction.xyz";
+      break;
+    case "neonevm":
+      jsonRpcUrl = "https://neon-proxy-mainnet.solana.p2p.org"
+      break;
+    case "neondev":
+      jsonRpcUrl = "https://devnet.neonevm.org"
       break;
     default:
       jsonRpcUrl = "https://" + chain + ".infura.io/v3/" + infuraApiKey;
@@ -74,7 +90,45 @@ const config: HardhatUserConfig = {
       polygon: process.env.POLYGONSCAN_API_KEY || "",
       polygonMumbai: process.env.POLYGONSCAN_API_KEY || "",
       sepolia: process.env.ETHERSCAN_API_KEY || "",
+      viction: process.env.VICSCAN_API_KEY || "",
+      victiontestnet: process.env.VICSCAN_TESTNET_API_KEY || "",
+      neondev: "",
+      neonevm: "",
     },
+    customChains: [
+      {
+        network: "neondev",
+        chainId: 245022926,
+        urls: {
+          apiURL: "https://devnet-api.neonscan.org/hardhat/verify",
+          browserURL: "https://devnet.neonscan.org",
+        },
+      },
+      {
+        network: "neonevm",
+        chainId: 245022934,
+        urls: {
+          apiURL: "https://api.neonscan.org/hardhat/verify",
+          browserURL: "https://neonscan.org",
+        },
+      },
+      {
+        network: "viction",
+        chainId: 88,
+        urls: {
+          apiURL: "https://www.vicscan.xyz/api/contract/hardhat/verify",
+          browserURL: "https://www.vicscan.xyz"
+        }
+      },
+      {
+        network: "victiontestnet",
+        chainId: 89,
+        urls: {
+          apiURL: "https://scan-api-testnet.viction.xyz/api/contract/hardhat/verify",
+          browserURL: "https://www.testnet.vicscan.xyz"
+        }
+      }
+    ]
   },
   gasReporter: {
     currency: "USD",
@@ -104,6 +158,10 @@ const config: HardhatUserConfig = {
     "polygon-mainnet": getChainConfig("polygon-mainnet"),
     "polygon-mumbai": getChainConfig("polygon-mumbai"),
     sepolia: getChainConfig("sepolia"),
+    viction: getChainConfig("viction"),
+    victiontestnet: getChainConfig("victiontestnet"),
+    neonevm: getChainConfig("neonevm"),
+    neondev: getChainConfig("neondev"),
   },
   paths: {
     artifacts: "./artifacts",
